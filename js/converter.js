@@ -1,10 +1,10 @@
 const inputField = document.getElementById('input-temp');
 const fromUnitField = document.getElementById('input-unit');
 const toUnitField = document.getElementById('output-unit');
-const outputFField = document.getElementById('output-temp');
+const outputField = document.getElementById('output-temp');
 const form = document.getElementById('converter');
 
-function converTemp(value,fromUnit, toUnit){
+function convertTemp(value,fromUnit, toUnit){
     /**
      * CONVERTIR DE CELCIUS A FARENHEIT O KELVIN
      */
@@ -37,7 +37,7 @@ function converTemp(value,fromUnit, toUnit){
         if(toUnit === 'c'){
             return value-273.15;
         }else if(toUnit === 'f'){
-            return value *9 /5 - 459.67;
+            return (value - 273.15) * 9/5 + 32;
         }
         return value;
     }
