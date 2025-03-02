@@ -24,7 +24,7 @@ function convertTemp(value,fromUnit, toUnit){
         if(toUnit === 'c'){
             return (value-32)*5/9;
         }else if(toUnit === 'k'){
-            return (value + 459.67) *5 /9;
+            return (value - 32) * 5 / 9 + 273.15;
         }
         return value;
     }
@@ -48,7 +48,7 @@ form.addEventListener('input',()=> {
     const inputTemp = parseFloat(inputField.value);
     const fromUnit = fromUnitField.value;
     const toUnit = toUnitField.value;
-    const outputTemp = converTemp(inputTemp, fromUnit, toUnit);
+    const outputTemp = convertTemp(inputTemp, fromUnit, toUnit);
 
-    outputField.value = (Math.round(outputTemp * 100)/1000) + ' '+ toUnit.toUpperCase();
+    outputField.textContent = (Math.round(outputTemp * 100)/100) + ' '+ toUnit.toUpperCase();
 });
