@@ -8,7 +8,7 @@
     "theme":"#2F3D58",
     "orientation":"any",
     "display": "standalone",
-    "icons":[
+    "icons": [
         {
             "src":"./media/icons/icon512.png",
             "sizes": "512x512"

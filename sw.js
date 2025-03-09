@@ -6,10 +6,10 @@ self.addEventListener('install',event => {
         cache.addAll([
             './',
             //'./index.html',
-            '/ja/converter.js',
+            '/js/converter.js',
             './css/style.css'
         ]);
-    }));
+    })());
 });
 
 self.addEventListener('fetch', event =>{
