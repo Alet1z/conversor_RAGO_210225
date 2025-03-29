@@ -13,7 +13,7 @@ self.addEventListener('install',event => {
 });
 
 self.addEventListener('fetch', event =>{
-    event.respondWith((async () => {
+    event.respondsWith((async () => {
         const cache = await caches.open(CACHE_NAME);
         const cachedResponse = await cache.match(event.request);
 
