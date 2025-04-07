@@ -31,7 +31,7 @@ async function recordVideo(){
 
         window.recorder.onstop = function(){
             let blob = new Blob(chunks,{type:'video/mp4'});
-            toggle.innerHTML=`<i class="fa fa-circle"><i>`;
+            toggle.innerHTML=`<i class="fa fa-circle"></i>`;
             videoE1.srcObject = null;
             videoE1.src = URL.createObjectURL(blob);
             let tracks = stream.getTracks();
@@ -39,7 +39,7 @@ async function recordVideo(){
         }
 
         window.recorder.onstart = function(){
-            toggle.innerHTML =`<i class="fa fa-square"><i>`;
+            toggle.innerHTML =`<i class="fa fa-square"></i>`;
         };
 
         window.recorder.start();
@@ -61,8 +61,8 @@ function geolocalizacion(){
 
 function _onGetCurrentLocation(){
     const options = {
-        enableHighAcccuracy: true,
-        tiemout:5000,
+        enableHighAccuracy: true,
+        timeout:5000,
         maximumAge: 0
     };
     navigator.geolocation.getCurrentPosition(function(position){
@@ -75,7 +75,21 @@ function _onGetCurrentLocation(){
         enlace.text =  "IR AL MAPA";
         enlace.target ="_blank";
     },function(error){
-        console.log(error);
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                alert("Permiso de ubicación denegado por el usuario.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("La ubicación no está disponible. Asegúrate de tener GPS o WiFi habilitado.");
+                break;
+            case error.TIMEOUT:
+                alert("La solicitud de ubicación tardó demasiado. Intenta de nuevo.");
+                break;
+            default:
+                alert("Error desconocido al obtener ubicación.");
+                break;
+        }
+        console.error("Error de geolocalización:", error);
     },options);
 }
 
@@ -84,11 +98,11 @@ const init = () =>{
     const tieneSoporteUserMedia = () =>
         !!(navigator.mediaDevices.getUserMedia);
 
-    if(typeof MediaRecorder === "undefined" || !tieneSoporteUserMedia()){
+    if(typeof window.MediaRecorder === "undefined" || !tieneSoporteUserMedia()){
         return alert("Su Navegador No cumple Los Requisitos, Por Favor Actualice a un Navegador mas reciente");
     }
 
-    const $listaDeDispositivos = document.querySelector("#listaDeDispositvos"),
+    const $listaDeDispositivos = document.querySelector("#listaDeDispositivos"),
     $duracion= document.querySelector("#duracion"),
     $btnComenzarGrabacion = document.querySelector("#btnComenzarGrabacion"),
     $btnDetenerGrabacion = document.querySelector("#btnDetenerGrabacion");
@@ -117,7 +131,7 @@ const init = () =>{
 
     let tiempoInicio, MediaRecorder, idIntervalo;
     const refrescar = () =>{
-        $duracion.textContent =segundosATiempo((Date.now - tiempoInicio)/1000);
+        $duracion.textContent =segundosATiempo((Date.now() - tiempoInicio)/1000);
     }
 
     const llenarLista= () =>{
@@ -175,11 +189,11 @@ const init = () =>{
     const detenerConteo = () =>{
         clearInterval(idIntervalo);
         tiempoInicio = null;
-        $duracion,textContent ="";
+        $duracion.textContent ="";
     }
 
     const detenerGrabacion = () =>{
-        if(!MediaRecorder) return alert("No se est grabando");
+        if(!MediaRecorder) return alert("No se esta grabando");
         MediaRecorder.stop();
         MediaRecorder = null;
     }
